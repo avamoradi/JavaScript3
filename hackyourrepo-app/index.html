@@ -20,6 +20,56 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <div class="container">
+      
+      <div class="blue-header">
+        <label for = "hyf-rep">HYF Repositiries</label>
+        <select name="repositories" id="hyf-rep">
+          <option value="SampleRepo1"> SampleRepo1 </option>
+          <option value="AndAnotherOne">AndAnotherOne</option>
+          <option value="HYF-Is-The-Best">HYF-Is-The-Best</option>
+        </select>
+      </div> <!--End of blue header-->
+
+      <div class="main flex">
+        <div class="m-left">
+         <div class="flex">
+           <label>Repository:</label>
+           <a href="" class="repository">SampleRepo1</a>
+         </div>
+         <div class="flex">
+           <label>Description:</label>
+           <p class="description">This repository is meant to be a sample</p>
+         </div>
+         <div class="flex">
+           <label>Forks:</label>
+           <p class="fork">5</p>
+         </div>
+         <div class="flex">
+           <label>Updated:</label>
+           <p class="updated">2020-05-27 12:00:00</p>
+         </div>
+       </div> <!--end of main left-->
+
+        <div class="m-right ">
+          <div class="mr-firstrow">
+            Contributors
+          </div>
+          <div class="mr-secondrow flex">
+            <img src="" alt="person photo" class="person-img">
+            <a href="">xxxxxxx</a>
+            <div class="frok-no">x</div>
+          </div>
+          <div class="mr-thirdrow flex">
+            <img src="" alt="person photo" class="person-img">
+            <a href="">yyyyy</a>
+            <div class="frok-no">y</div>
+          </div>
+        </div> <!--end of main right-->
+      </div><!--end of main-->
+    </div> <!--End of container-->
+    <footer>HYF Repositories </footer>
+
     <script src="./script.js"></script>
   </body>
 </html>
