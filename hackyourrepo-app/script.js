@@ -1,9 +1,5 @@
 "use strict";
 
-/*
-  Write here your JavaScript for HackYourRepo!
-*/
-"use strict";
 //container
 const containerDiv = document.createElement('div')
 containerDiv.className = "container";
@@ -41,7 +37,7 @@ labelRepositort.innerText = "Repositiries:";
 firstLeftDiv.appendChild(labelRepositort);
 
 const secondLeftDiv = document.createElement('div')
-firstLeftDiv.className = "flex";
+secondLeftDiv.className = "flex";
 mLeftDiv.appendChild(secondLeftDiv);
 
 const labelDescription = document.createElement('label');
@@ -49,7 +45,7 @@ labelDescription.innerText = "Description:";
 secondLeftDiv.appendChild(labelDescription);
 
 const thirdLeftDiv = document.createElement('div')
-firstLeftDiv.className = "flex";
+thirdLeftDiv.className = "flex";
 mLeftDiv.appendChild(thirdLeftDiv);
 
 const labelForks = document.createElement('label');
@@ -57,120 +53,131 @@ labelForks.innerText = "Forks:";
 thirdLeftDiv.appendChild(labelForks);
 
 const forthLeftDiv = document.createElement('div')
-firstLeftDiv.className = "flex";
+forthLeftDiv.className = "flex";
 mLeftDiv.appendChild(forthLeftDiv);
 
 const labelUpdated = document.createElement('label');
 labelUpdated.innerText = "Updated:";
 forthLeftDiv.appendChild(labelUpdated);
-/*
 
-        <div class="m-left">
-         <div class="flex">
-           <label>Repository:</label>
-           <a href="" class="repository">SampleRepo1</a>
-         </div>
-         <div class="flex">
-           <label>Description:</label>
-           <p class="description">This repository is meant to be a sample</p>
-         </div>
-         <div class="flex">
-           <label>Forks:</label>
-           <p class="fork">5</p>
-         </div>
-         <div class="flex">
-           <label>Updated:</label>
-           <p class="updated">2020-05-27 12:00:00</p>
-         </div>
-       </div> <!--end of main left--> */
+const repoLink = document.createElement('a');
+repoLink.innerHTML = "";
+firstLeftDiv.appendChild(repoLink);
+
+const descTag = document.createElement('p');
+descTag.innerText = ('');
+secondLeftDiv.appendChild(descTag);
+
+const forkTag = document.createElement('p');
+forkTag.innerText = ('');
+thirdLeftDiv.appendChild(forkTag);
+
+const updateTag = document.createElement('p');
+updateTag.innerText = ('');
+forthLeftDiv.appendChild(updateTag);
 
 //Main Right Div
 const mrightDiv = document.createElement('div');
 mrightDiv.className = "m-right";
 mainDiv.appendChild(mrightDiv);
 
-//Div Right  row 1 
+//Div Right  row 1 (contributors)
 const rightfistRowDiv = document.createElement('div');
 rightfistRowDiv.className = "mr-firstrow";
 rightfistRowDiv.innerText = "Contributors";
 mrightDiv.appendChild(rightfistRowDiv);
 
-//Div Contributor
-const contributorsDiv = document.createElement('div');
-contributorsDiv.classList.add("mr-row", "flex");
-mrightDiv.appendChild(contributorsDiv);
-
-const personImage = document.createElement('img');
-personImage.src = "";
-personImage.alt = "Person Photo";
-personImage.className = "person-img"
-contributorsDiv.appendChild(personImage);
-
-const NameLink = document.createElement('a');
-const link = document.createTextNode("xxx"); 
-NameLink.appendChild(link);
-contributorsDiv.appendChild(NameLink);
-
-const forkNoDiv = document.createElement('div');
-forkNoDiv.className = "frok-no";
-contributorsDiv.appendChild(forkNoDiv);
-
 const footer = document.createElement('footer');
 footer.innerText = "HYF Repositories";
 document.body.appendChild(footer);
 
+//main function
+function main(){
+   
+   //function fetchRepositories
+   function fetchRepositories() {
+    const reposURL = "https://api.github.com/orgs/HackYourFuture/repos?per_page=100";
+    fetch(reposURL)
+    .then(response => {
+      if (response.status >=200 && response.status < 400 ) {
+        return response.json();
+      } else {
+        throw "HTTP ERROR"
+      }
+    })
+    .then(jsonData =>{
+      let arraySort = [];
+      jsonData.forEach(element => {
+        arraySort.push(element.name);
+      });
+      arraySort.sort(function(a, b) {
+        if (a.toLowerCase() < b.toLowerCase()) return -1;
+        if (a.toLowerCase() > b.toLowerCase()) return 1;
+        return 0;
+      });
+      arraySort.forEach(element => {
+        const option = document.createElement('option');
+        option.innerText= element;
+        repositoriesSelect.appendChild(option);
+      });
 
-const placeholderRepos = [
-  {
-    name: 'SampleRepo1',
-    description: 'This repository is meant to be a sample',
-    forks: 5,
-    updated: '2020-05-27 12:00:00',
-  },
-  {
-    name: 'AndAnotherOne',
-    description: 'Another sample repo! Can you believe it?',
-    forks: 9,
-    updated: '2020-05-27 12:00:00',
-  },
-  {
-    name: 'HYF-Is-The-Best',
-    description:
-      "This repository contains all things HackYourFuture. That's because HYF is amazing!!!!",
-    forks: 130,
-    updated: '2020-05-27 12:00:00',
-  },
-];
-
-const repository = document.querySelector('.repository');
-const description = document.querySelector('.description');
-const fork = document.querySelector('.fork');
-const updated = document.querySelector('.updated');
-const selectOption = document.querySelector('#hyf-rep');
-
-function filledForm(value){
-  if (value === "SampleRepo1"){
-    repository.innerHTML = placeholderRepos[0].name;
-    description.innerHTML = placeholderRepos[0].description;
-    fork.innerHTML = placeholderRepos[0].forks;
-    updated.innerHTML = placeholderRepos[0].updated;
+      filledForm();
+    })
+    .catch(error => console.log(error))
   }
 
-  if (value === "AndAnotherOne"){
-    repository.innerHTML = placeholderRepos[1].name;
-    description.innerHTML = placeholderRepos[1].description;
-    fork.innerHTML = placeholderRepos[1].forks;
-    updated.innerHTML = placeholderRepos[1].updated;
+  repositoriesSelect.addEventListener('change', filledForm);
+  
+  // function FilledForm
+  function filledForm(){
+    repoLink.innerHTML = ""; 
+    descTag.innerText = "";
+    forkTag.innerText = "";
+    updateTag.innerText = "";
+
+    const reposURL = `https://api.github.com/repos/HackYourFuture/${repositoriesSelect.value}`;
+    fetch(reposURL)
+    .then(response => {
+      if (response.status >=200 && response.status < 400 ) {
+        return response.json();
+      } else {
+        throw "HTTP ERROR"
+      }
+    })
+
+    .then(jsonData =>{
+      repoLink.innerHTML = jsonData.name; 
+      repoLink.setAttribute('href', jsonData.html_url);
+      descTag.innerText = jsonData.description;
+      forkTag.innerText = jsonData.forks;
+      updateTag.innerText = jsonData.updated_at;
+
+      fetch(`https://api.github.com/repos/HackYourFuture/${repositoriesSelect.value}/contributors`)
+
+      .then(response => {
+        if (response.status >=200 && response.status < 400 ) {
+          return response.json();
+        } else {
+          throw "HTTP ERROR"
+        }
+      })
+      .then(jsonData =>{
+        const newArray = jsonData;
+        mrightDiv.innerHTML= "";
+        newArray.forEach(element =>{
+          mrightDiv.innerHTML +=
+          `<div class="flex">
+          <img src= ${element.avatar_url} class="person-img"></img>
+          <a href ="https://github.com/${element.login}">
+          ${element.login}</a>
+          <div class="fork-no">${element.contributions}</div>
+          </div>`
+        })
+      })
+    });
   }
 
-  if (value === "HYF-Is-The-Best"){
-    repository.innerHTML = placeholderRepos[2].name;
-    description.innerHTML = placeholderRepos[2].description;
-    fork.innerHTML = placeholderRepos[2].forks;
-    updated.innerHTML = placeholderRepos[2].updated;
-  }
+  fetchRepositories();
 }
 
-selectOption.addEventListener('change', (event) => {
-  filledForm(event.target.value)
-});
+window.onload = main();
