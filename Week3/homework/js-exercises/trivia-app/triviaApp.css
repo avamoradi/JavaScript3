@@ -1,0 +1,45 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  box-sizing: border-box;
+}
+
+h1{
+  color: #7F423D;
+  margin: 1rem;
+}
+
+.container{
+  margin: 0 auto;
+  width: 70%;
+  height: auto;
+  padding: 1rem;
+}
+
+.container p {
+  margin: 1rem;
+  font-size: 1.5rem;
+}
+
+.main{
+  background-color :#A8AD97;
+  margin: 1rem;
+}
+
+.questionDivStyle{
+  padding: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.questionDivStyle:hover{
+  background-color: #EADAD0;
+}
+
+.answerDiv{
+  background-color: #D0C9B5;
+  padding: 0.5rem;
+  visibility: hidden ;
+}
