@@ -10,6 +10,7 @@ function pagination(listItem){
     let start = rowsPerPage * page;
     let end = start + rowsPerPage;
     let paginatedItem = items.slice(start , end);
+    
     for (let i = 0; i < paginatedItem.length; i++){
       let item = paginatedItem[i];
       let itemElement = document.createElement('div');

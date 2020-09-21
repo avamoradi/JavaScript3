@@ -1,4 +1,4 @@
-function filledForm(){
+function fillRepoInfo(){
   repoLink.innerHTML = ""; 
   descTag.innerText = "";
   forkTag.innerText = "";

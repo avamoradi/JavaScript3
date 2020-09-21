@@ -24,7 +24,7 @@ function fetchRepositories() {
       repositoriesSelect.appendChild(option);
     });
 
-    filledForm();
+    fillRepoInfo();
   })
   .catch(error => console.log(error))
 }

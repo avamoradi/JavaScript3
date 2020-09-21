@@ -102,7 +102,7 @@ document.body.appendChild(footer);
 //main function
 function main(){
   fetchRepositories();
-  repositoriesSelect.addEventListener('change', filledForm);
+  repositoriesSelect.addEventListener('change', fillRepoInfo);
   pagination;
 }
 
