@@ -17,25 +17,43 @@ async function fetchAPI(){
  return resaultsArr;
 }
 
-//function makeDiv
- async function makeDiv(){
-   console.log(resaultsArr)
+//function makeDiv  make div for each question
+ async function makeQuestionDiv(){
   resaultsArr.forEach(element => {
-   mainDiv.innerHTML += `<div class="questionDivStyle">${element.question}</div>`
-  })
+    console.log(element.correct_answer)
+    // decode the string
+   if (!String.prototype.HTMLDecode) {
+    String.prototype.HTMLDecode = function () {
+      var str = this.toString(),
+      decoderEl = document.createElement('p');
+      if (str.length == 0) {
+       return str;
+      }
+      str = str.replace(/((\r\n)|(\r)|(\n))/gi, " <br/>");            
+      decoderEl.innerHTML = str;
+      str = decoderEl.innerText || decoderEl.textContent;
+      decoderEl = null;
+      return str.replace(/<br((\/)|( \/))?>/gi, "\r\n");
+    };
+  }
+     // add questions to Div
+  let decodedString = element.question.HTMLDecode();
+  mainDiv.innerHTML += `<div class="questionDivStyle">${decodedString}</div>`
   const objectDiv = document.querySelectorAll(".questionDivStyle");
   objectDiv.forEach((element, index) => {
-    let checkFlag = false;
-    element.addEventListener("click", () =>{
-      if (checkFlag === false){
+   let checkFlag = false;
+   // show answer after click
+   element.addEventListener("click", () =>{
+    if (checkFlag === false){
       correctAnswerDiv = document.createElement('div');
-      correctAnswerDiv.innerText = resaultsArr[index].correct_answer;
+      correctAnswerDiv.innerText = resaultsArr[index].correct_answer.HTMLDecode();
       correctAnswerDiv.className = "correctAnswer";
       mainDiv.insertBefore(correctAnswerDiv, element.nextSibling);
       checkFlag = true;
-      }
-    })
+    }
+   })
   })
+ })
 }
 
 // Function main
@@ -45,5 +63,5 @@ async function fetchAPI(){
 
  const URL = "https://opentdb.com/api.php?amount=5"
  window.onload = main()
- .then(async (resaultsArr) =>  await makeDiv(resaultsArr))
+ .then(async (resaultsArr) =>  await makeQuestionDiv(resaultsArr))
  .catch( (error) => console.log(error))
