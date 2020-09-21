@@ -5,10 +5,11 @@
 
 body{
   box-sizing: border-box;
+  color: #444852;
 }
 
 h1{
-  color: #7F423D;
+  color:#FA6E4F;
   margin: 1rem;
 }
 
@@ -25,7 +26,7 @@ h1{
 }
 
 .main{
-  background-color :#A8AD97;
+  background-color :#8EC9BB;
   margin: 1rem;
 }
 
@@ -35,11 +36,11 @@ h1{
 }
 
 .questionDivStyle:hover{
-  background-color: #EADAD0;
+  background-color: #F8CA9D;
 }
 
-.answerDiv{
-  background-color: #D0C9B5;
+.correctAnswer{
+  background-color:#C5D7C0;
   padding: 0.5rem;
-  visibility: hidden ;
-}
+  font-weight: bold;
+  }
