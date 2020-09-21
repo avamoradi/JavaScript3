@@ -87,97 +87,23 @@ rightfistRowDiv.className = "mr-firstrow";
 rightfistRowDiv.innerText = "Contributors";
 mrightDiv.appendChild(rightfistRowDiv);
 
+//Pgination
+const pageNoDiv = document.createElement('div');
+pageNoDiv.className = "pagenumbers";
+pageNoDiv.id = "pagination";
+document.body.appendChild(pageNoDiv);
+
+
+//Footer
 const footer = document.createElement('footer');
 footer.innerText = "HYF Repositories";
 document.body.appendChild(footer);
 
 //main function
 function main(){
-   
-   //function fetchRepositories
-   function fetchRepositories() {
-    const reposURL = "https://api.github.com/orgs/HackYourFuture/repos?per_page=100";
-    fetch(reposURL)
-    .then(response => {
-      if (response.status >=200 && response.status < 400 ) {
-        return response.json();
-      } else {
-        throw "HTTP ERROR"
-      }
-    })
-    .then(jsonData =>{
-      let arraySort = [];
-      jsonData.forEach(element => {
-        arraySort.push(element.name);
-      });
-      arraySort.sort(function(a, b) {
-        if (a.toLowerCase() < b.toLowerCase()) return -1;
-        if (a.toLowerCase() > b.toLowerCase()) return 1;
-        return 0;
-      });
-      arraySort.forEach(element => {
-        const option = document.createElement('option');
-        option.innerText= element;
-        repositoriesSelect.appendChild(option);
-      });
-
-      filledForm();
-    })
-    .catch(error => console.log(error))
-  }
-
-  repositoriesSelect.addEventListener('change', filledForm);
-  
-  // function FilledForm
-  function filledForm(){
-    repoLink.innerHTML = ""; 
-    descTag.innerText = "";
-    forkTag.innerText = "";
-    updateTag.innerText = "";
-
-    const reposURL = `https://api.github.com/repos/HackYourFuture/${repositoriesSelect.value}`;
-    fetch(reposURL)
-    .then(response => {
-      if (response.status >=200 && response.status < 400 ) {
-        return response.json();
-      } else {
-        throw "HTTP ERROR"
-      }
-    })
-
-    .then(jsonData =>{
-      repoLink.innerHTML = jsonData.name; 
-      repoLink.setAttribute('href', jsonData.html_url);
-      descTag.innerText = jsonData.description;
-      forkTag.innerText = jsonData.forks;
-      updateTag.innerText = jsonData.updated_at;
-
-      fetch(`https://api.github.com/repos/HackYourFuture/${repositoriesSelect.value}/contributors`)
-
-      .then(response => {
-        if (response.status >=200 && response.status < 400 ) {
-          return response.json();
-        } else {
-          throw "HTTP ERROR"
-        }
-      })
-      .then(jsonData =>{
-        const newArray = jsonData;
-        mrightDiv.innerHTML= "";
-        newArray.forEach(element =>{
-          mrightDiv.innerHTML +=
-          `<div class="flex">
-          <img src= ${element.avatar_url} class="person-img"></img>
-          <a href ="https://github.com/${element.login}">
-          ${element.login}</a>
-          <div class="fork-no">${element.contributions}</div>
-          </div>`
-        })
-      })
-    });
-  }
-
   fetchRepositories();
+  repositoriesSelect.addEventListener('change', filledForm);
+  pagination;
 }
 
 window.onload = main();

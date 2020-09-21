@@ -41,7 +41,7 @@ body{
 
 .flex {
   display: flex;
-  justify-content:space-around;
+  justify-content:space-between;
 }
 
 .m-left{
@@ -55,7 +55,7 @@ body{
 
 .m-left div{
   margin:0.4rem 1rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .m-left label{
@@ -66,12 +66,12 @@ body{
 .m-left p,a{
   font-weight:200;
   line-height: 1.5rem;
-  width: 70%;
+  width: 60%;
 }
 
 .m-right{
   width: 50%;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .m-right>div {
@@ -97,6 +97,35 @@ body{
   width: 15%;
   height: auto;
 } 
+
+.pagenumbers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+.pagenumbers button{
+  width: 40px;
+  height: 40px;
+  appearance: none;
+  border : 1px solid #DCDCDC;
+  outline: none;
+  cursor: pointer;
+  margin: 0.3rem;
+  transition: 0.4s;
+  font-size: 1rem;
+}
+
+.pagenumbers button:hover {
+   background-color:  #3fb5a3;
+   font-weight: bold;
+}
+
+.pagenumbers button.active {
+  background-color: #3F51B5;
+}
 
 footer{
   position: fixed;
@@ -135,4 +164,5 @@ footer{
     flex-direction: column;
     align-items:flex-end;
  }
+ 
 }
