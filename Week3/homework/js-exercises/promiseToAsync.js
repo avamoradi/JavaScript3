@@ -48,11 +48,11 @@ const makeAllCaps1 = array => {
   });
 };
 
-// Execrise B with async/await
  makeAllCaps1(arrayOfWords)
   .then(result => console.log(result))
   .catch(error => console.log(error));
 
+// Execrise B with async/await
 async function makeAllCaps(array) {
   let capsArray = null;
   try {
